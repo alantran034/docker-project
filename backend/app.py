@@ -4,51 +4,28 @@ import os
 
 app = Flask(__name__)
 
-def get_db_connection():
-    try:
-        conn = psycopg2.connect(
-            os.environ.get("DATABASE_URL")
-        )
-        return conn
-    except Exception as e:
-        print(" Lỗi kết nối DB:", e)
-        return None
-
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 @app.route("/")
 def home():
-    return "Docker Project chạy OK 🚀"
+    return jsonify({"message": "API running OK"})
 
+@app.route("/users")
+def users():
+    return jsonify([
+        {"id": 1, "name": "Thanh"},
+        {"id": 2, "name": "Docker"}
+    ])
 
-@app.route("/data")
-def data():
-    conn = get_db_connection()
-
-    if conn is None:
-        return jsonify({
-            "status": "error",
-            "message": "Không kết nối được database"
-        })
-
+@app.route("/db")
+def test_db():
     try:
-        cur = conn.cursor()
-        cur.execute("SELECT NOW();")
-        result = cur.fetchone()
-
-        cur.close()
+        conn = psycopg2.connect(DATABASE_URL, sslmode="require")
         conn.close()
-
-        return jsonify({
-            "status": "success",
-            "time": str(result[0])
-        })
-
+        return jsonify({"status": "Connected to Render DB"})
     except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        })
-
+        return jsonify({"error": str(e)})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port)
