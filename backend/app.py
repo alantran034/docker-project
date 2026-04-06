@@ -17,9 +17,7 @@ def get_db_connection():
 
 @app.route("/")
 def home():
-    return jsonify({
-        "message": " API Docker Cloud đang chạy!"
-    })
+    return "Docker Project chạy OK 🚀"
 
 
 @app.route("/data")
