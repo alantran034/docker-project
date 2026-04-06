@@ -7,7 +7,7 @@ app = Flask(__name__)
 def get_db_connection():
     try:
         conn = psycopg2.connect(
-            os.environ.get("postgresql://postgres1:FSHxbpNTO2K3TOYQ44RDUXD0XbqYL0be@dpg-d79ukln5r7bs738376ag-a/postgres1_5b72")
+            os.environ.get("DATABASE_URL")
         )
         return conn
     except Exception as e:
