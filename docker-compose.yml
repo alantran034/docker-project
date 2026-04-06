@@ -15,18 +15,7 @@ services:
   api:
     build: ./backend
     container_name: backend
+    ports:
+      - "8000:8000"
     environment:
-      - DB_HOST=db
-    depends_on:
-      - db
-
-  db:
-    image: postgres:16
-    container_name: postgres_db
-    environment:
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-volumes:
-  db_data:
+      - DATABASE_URL=postgresql://postgres1:FSHxbpNTO2K3TOYQ44RDUXD0XbqYL0be@dpg-d79ukln5r7bs738376ag-a.singapore-postgres.render.com/postgres1_5b72
