@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-ENV DB_HOST=db
+ENV DATABASE_URL=postgresql://postgres1:FSHxbpNTO2K3TOYQ44RDUXD0XbqYL0be@dpg-d79ukln5r7bs738376ag-a.singapore-postgres.render.com/postgres1_5b72
 
 EXPOSE 8000
 
